@@ -4,22 +4,16 @@ import {
   Car, 
   MapPin, 
   Calendar, 
-  Clock, 
   ShieldCheck, 
   CreditCard, 
   CheckCircle2, 
   ArrowLeft, 
-  Sparkles, 
   Printer, 
   Lock, 
-  AlertCircle, 
-  Download, 
-  ChevronRight,
-  Shield,
+  ArrowRight,
   User,
-  Mail,
-  Phone,
-  FileText
+  Zap,
+  QrCode
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useRental } from '../context/RentalContext';
@@ -42,36 +36,32 @@ export default function BookingPage() {
 
   // Booking details form state
   const [formData, setFormData] = useState({
-    pickupLocation: queryParams.get('pickup') || searchParams.pickupLocation || 'lax',
-    dropoffLocation: queryParams.get('dropoff') || searchParams.dropoffLocation || 'lax',
+    pickupLocation: queryParams.get('pickup') || searchParams.pickupLocation || 'blr-airport',
+    dropoffLocation: queryParams.get('dropoff') || searchParams.dropoffLocation || 'blr-airport',
     pickupDate: queryParams.get('from') || searchParams.pickupDate || new Date(Date.now() + 86400000).toISOString().split('T')[0],
     pickupTime: searchParams.pickupTime || '10:00',
     returnDate: queryParams.get('to') || searchParams.returnDate || new Date(Date.now() + 86400000 * 4).toISOString().split('T')[0],
     returnTime: searchParams.returnTime || '10:00',
     
-    // Customer Info
-    firstName: '',
-    lastName: '',
+    // Customer Info in India
+    fullName: '',
     email: '',
     phone: '',
     licenseNumber: '',
-    licenseCountry: 'United States',
+    aadhaarNumber: '',
     isOver21: true,
     flightNumber: '',
-    notes: '',
+    gstNumber: '',
 
-    // Add-ons
-    shieldInsurance: true, // $29/day
-    additionalDriver: false, // $15/day
-    childSeat: false, // $10/day
-    prepaidFuel: false, // $45 flat
-    gpsNavigator: false, // $8/day
+    // Add-ons in INR
+    shieldInsurance: true, // ₹499/day
+    additionalDriver: false, // ₹299/day
+    childSeat: false, // ₹199/day
+    prepaidFuel: false, // ₹1,499 flat
 
-    // Payment simulation
-    paymentMethod: 'card', // card, applepay, googlepay
-    cardNumber: '4242 •••• •••• 4242',
-    cardExp: '12/28',
-    cardCvc: '•••'
+    // Payment method
+    paymentMethod: 'upi', // upi, card, netbanking
+    upiId: 'name@oksbi'
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -86,7 +76,7 @@ export default function BookingPage() {
     return diff > 0 ? diff : 1;
   }, [formData.pickupDate, formData.returnDate]);
 
-  // Pricing calculations
+  // Pricing calculations in INR (₹)
   const pricing = useMemo(() => {
     let baseRate = 0;
     let discount = 0;
@@ -105,13 +95,12 @@ export default function BookingPage() {
       baseRate = durationDays * car.dailyPrice;
     }
 
-    const insuranceCost = formData.shieldInsurance ? durationDays * 29 : 0;
-    const additionalDriverCost = formData.additionalDriver ? durationDays * 15 : 0;
-    const childSeatCost = formData.childSeat ? durationDays * 10 : 0;
-    const gpsCost = formData.gpsNavigator ? durationDays * 8 : 0;
-    const prepaidFuelCost = formData.prepaidFuel ? 45 : 0;
+    const insuranceCost = formData.shieldInsurance ? durationDays * 499 : 0;
+    const additionalDriverCost = formData.additionalDriver ? durationDays * 299 : 0;
+    const childSeatCost = formData.childSeat ? durationDays * 199 : 0;
+    const prepaidFuelCost = formData.prepaidFuel ? 1499 : 0;
 
-    const addonsTotal = insuranceCost + additionalDriverCost + childSeatCost + gpsCost + prepaidFuelCost;
+    const addonsTotal = insuranceCost + additionalDriverCost + childSeatCost + prepaidFuelCost;
     const grandTotal = baseRate + addonsTotal;
 
     return {
@@ -120,7 +109,6 @@ export default function BookingPage() {
       insuranceCost,
       additionalDriverCost,
       childSeatCost,
-      gpsCost,
       prepaidFuelCost,
       addonsTotal,
       grandTotal
@@ -129,16 +117,18 @@ export default function BookingPage() {
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.firstName.trim()) errors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) errors.lastName = 'Last name is required';
+    if (!formData.fullName.trim()) errors.fullName = 'Full legal name is required as per Driving License';
     if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'A valid email address is required';
+      errors.email = 'A valid email address is required for digital key voucher';
     }
-    if (!formData.phone.trim() || formData.phone.length < 8) {
-      errors.phone = 'A valid phone number is required';
+    if (!formData.phone.trim() || formData.phone.length < 10) {
+      errors.phone = 'Valid 10-digit mobile number is required';
     }
     if (!formData.licenseNumber.trim()) {
-      errors.licenseNumber = "Driver's license number is required";
+      errors.licenseNumber = "Indian Driving License Number is required";
+    }
+    if (!formData.aadhaarNumber.trim()) {
+      errors.aadhaarNumber = "Aadhaar Card or Passport number is required for digital KYC";
     }
     if (!formData.isOver21) {
       errors.isOver21 = 'You must confirm driver is 21 or older';
@@ -160,8 +150,8 @@ export default function BookingPage() {
 
     setTimeout(() => {
       const newBookingRecord = {
-        id: `BK-${Date.now().toString().slice(-6)}`,
-        bookingRef: `RENT-${Math.floor(100000 + Math.random() * 900000)}`,
+        id: `BK-IN-${Date.now().toString().slice(-6)}`,
+        bookingRef: `RENT-IN-${Math.floor(100000 + Math.random() * 900000)}`,
         createdAt: new Date().toISOString(),
         carId: car.id,
         carName: car.name,
@@ -176,10 +166,11 @@ export default function BookingPage() {
         returnTime: formData.returnTime,
         durationDays,
         totalPrice: pricing.grandTotal,
-        customerName: `${formData.firstName} ${formData.lastName}`,
+        customerName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
         licenseNumber: formData.licenseNumber,
+        aadhaarNumber: formData.aadhaarNumber,
         insuranceShield: formData.shieldInsurance
       };
 
@@ -187,7 +178,7 @@ export default function BookingPage() {
       setConfirmedBooking(newBookingRecord);
       setIsSubmitting(false);
 
-      // Trigger Confetti Celebration!
+      // Trigger Celebration
       try {
         confetti({
           particleCount: 120,
@@ -204,7 +195,7 @@ export default function BookingPage() {
 
   const getLocationName = (locId) => {
     const loc = LOCATIONS.find(l => l.id === locId);
-    return loc ? loc.name : locId;
+    return loc ? `${loc.name} (${loc.city})` : locId;
   };
 
   // =========================================================================
@@ -228,7 +219,7 @@ export default function BookingPage() {
             You're All Set to Drive!
           </h1>
           <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-            A confirmation voucher with your digital unlock key has been sent to <strong className="text-white">{confirmedBooking.email}</strong>.
+            Your booking confirmation and digital key voucher have been sent to <strong className="text-white">{confirmedBooking.email}</strong> and mobile SMS.
           </p>
         </div>
 
@@ -247,12 +238,12 @@ export default function BookingPage() {
 
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">
-                Paid & Scheduled
+                Fastag & Trip Active
               </span>
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                className="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-200 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Printer className="w-3.5 h-3.5 text-amber-400" />
                 <span>Print Voucher</span>
@@ -275,18 +266,14 @@ export default function BookingPage() {
                 {confirmedBooking.carName}
               </h3>
               <p className="text-xs text-slate-400">
-                Total Duration: <strong className="text-white">{confirmedBooking.durationDays} Days</strong> • Guaranteed Rate: <strong className="text-amber-400">{formatPrice(confirmedBooking.totalPrice)}</strong>
+                Total Duration: <strong className="text-white">{confirmedBooking.durationDays} Days</strong> • Total Amount: <strong className="text-amber-400">{formatPrice(confirmedBooking.totalPrice)}</strong>
               </p>
             </div>
 
-            {/* Simulated Digital Key QR Code */}
+            {/* QR Code Simulation */}
             <div className="p-3 bg-white rounded-xl shadow-lg shrink-0 flex flex-col items-center">
               <div className="w-20 h-20 bg-slate-950 flex items-center justify-center p-1 rounded">
-                <div className="grid grid-cols-4 gap-1 w-full h-full p-1">
-                  {[...Array(16)].map((_, i) => (
-                    <div key={i} className={`rounded-xs ${i % 2 === 0 ? 'bg-amber-400' : 'bg-white'}`}></div>
-                  ))}
-                </div>
+                <QrCode className="w-14 h-14 text-amber-400" />
               </div>
               <span className="text-[9px] font-mono text-slate-900 font-bold mt-1 uppercase">Digital Key</span>
             </div>
@@ -295,7 +282,7 @@ export default function BookingPage() {
           {/* Itinerary Details Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-300">
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-              <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider block">Pickup Logistics</span>
+              <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider block">Pickup Hub</span>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
                 <span className="font-semibold text-white">{getLocationName(confirmedBooking.pickupLocation)}</span>
@@ -307,7 +294,7 @@ export default function BookingPage() {
             </div>
 
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-              <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider block">Return Logistics</span>
+              <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider block">Return Hub</span>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
                 <span className="font-semibold text-white">{getLocationName(confirmedBooking.dropoffLocation)}</span>
@@ -326,25 +313,25 @@ export default function BookingPage() {
               <strong className="text-white">{confirmedBooking.customerName}</strong>
             </div>
             <div>
-              <span className="text-slate-400 block text-[11px]">Driver's License</span>
+              <span className="text-slate-400 block text-[11px]">Driving License</span>
               <strong className="text-white">{confirmedBooking.licenseNumber}</strong>
             </div>
             <div>
-              <span className="text-slate-400 block text-[11px]">Contact Phone</span>
+              <span className="text-slate-400 block text-[11px]">Contact Mobile</span>
               <strong className="text-white">{confirmedBooking.phone}</strong>
             </div>
             <div>
               <span className="text-slate-400 block text-[11px]">Protection Shield</span>
-              <strong className="text-emerald-400">{confirmedBooking.insuranceShield ? 'Full Shield Included' : 'Standard'}</strong>
+              <strong className="text-emerald-400">{confirmedBooking.insuranceShield ? 'Full Shield Active' : 'Standard'}</strong>
             </div>
           </div>
 
-          {/* Action CTAs */}
+          {/* Action CTAs - NO STAR SYMBOL */}
           <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
             <button
               type="button"
               onClick={() => setIsBookingsDrawerOpen(true)}
-              className="w-full sm:flex-1 py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 transition-all text-center"
+              className="w-full sm:flex-1 py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 transition-all text-center cursor-pointer"
             >
               View In My Reservations
             </button>
@@ -372,7 +359,7 @@ export default function BookingPage() {
       <div className="flex items-center justify-between">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to car</span>
@@ -380,7 +367,7 @@ export default function BookingPage() {
 
         <div className="flex items-center gap-2 text-xs text-slate-400">
           <Lock className="w-3.5 h-3.5 text-emerald-400" />
-          <span>256-Bit SSL Encrypted Checkout</span>
+          <span>256-Bit SSL Encrypted Indian Payment Gateway</span>
         </div>
       </div>
 
@@ -404,13 +391,13 @@ export default function BookingPage() {
           <div className="glass-panel p-6 rounded-3xl space-y-4">
             <h3 className="text-sm font-bold text-white flex items-center gap-2 uppercase tracking-wider">
               <MapPin className="w-4 h-4 text-amber-400" />
-              <span>1. Rental Logistics & Stations</span>
+              <span>1. Hub Location & Schedule</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Pickup Station
+                  Pickup Hub (Airports & Metro Hubs)
                 </label>
                 <select
                   value={formData.pickupLocation}
@@ -419,7 +406,7 @@ export default function BookingPage() {
                 >
                   {LOCATIONS.map((l) => (
                     <option key={l.id} value={l.id} className="bg-slate-900 text-white">
-                      {l.name}
+                      {l.name} ({l.city})
                     </option>
                   ))}
                 </select>
@@ -427,7 +414,7 @@ export default function BookingPage() {
 
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Return Station
+                  Return Hub
                 </label>
                 <select
                   value={formData.dropoffLocation}
@@ -436,7 +423,7 @@ export default function BookingPage() {
                 >
                   {LOCATIONS.map((l) => (
                     <option key={l.id} value={l.id} className="bg-slate-900 text-white">
-                      {l.name}
+                      {l.name} ({l.city})
                     </option>
                   ))}
                 </select>
@@ -491,45 +478,48 @@ export default function BookingPage() {
           <div className="glass-panel p-6 rounded-3xl space-y-4">
             <h3 className="text-sm font-bold text-white flex items-center gap-2 uppercase tracking-wider">
               <User className="w-4 h-4 text-amber-400" />
-              <span>2. Primary Driver Information</span>
+              <span>2. Primary Driver Digital KYC</span>
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  First Name *
+                  Full Name (As on Driving License) *
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Alexander"
-                  value={formData.firstName}
-                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                  className={`w-full bg-slate-900 border rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none ${formErrors.firstName ? 'border-rose-500' : 'border-white/10 focus:border-amber-400'}`}
+                  placeholder="e.g. Rahul Sharma"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  className={`w-full bg-slate-900 border rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none ${formErrors.fullName ? 'border-rose-500' : 'border-white/10 focus:border-amber-400'}`}
                 />
-                {formErrors.firstName && <span className="text-[10px] text-rose-400 mt-1 block">{formErrors.firstName}</span>}
+                {formErrors.fullName && <span className="text-[10px] text-rose-400 mt-1 block">{formErrors.fullName}</span>}
               </div>
 
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Last Name *
+                  Mobile Number (For WhatsApp Voucher) *
                 </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Vance"
-                  value={formData.lastName}
-                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                  className={`w-full bg-slate-900 border rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none ${formErrors.lastName ? 'border-rose-500' : 'border-white/10 focus:border-amber-400'}`}
-                />
-                {formErrors.lastName && <span className="text-[10px] text-rose-400 mt-1 block">{formErrors.lastName}</span>}
+                <div className="flex items-center gap-1.5 bg-slate-900 border border-white/10 rounded-xl px-3 py-2">
+                  <span className="text-xs font-bold text-amber-400">+91</span>
+                  <input
+                    type="tel"
+                    placeholder="98765 43210"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full bg-transparent text-xs text-white focus:outline-none"
+                  />
+                </div>
+                {formErrors.phone && <span className="text-[10px] text-rose-400 mt-1 block">{formErrors.phone}</span>}
               </div>
 
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Email Address (for Digital Voucher) *
+                  Email Address *
                 </label>
                 <input
                   type="email"
-                  placeholder="name@luxury-corp.com"
+                  placeholder="rahul@domain.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className={`w-full bg-slate-900 border rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none ${formErrors.email ? 'border-rose-500' : 'border-white/10 focus:border-amber-400'}`}
@@ -539,25 +529,11 @@ export default function BookingPage() {
 
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Mobile Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  placeholder="+1 (555) 019-2834"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className={`w-full bg-slate-900 border rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none ${formErrors.phone ? 'border-rose-500' : 'border-white/10 focus:border-amber-400'}`}
-                />
-                {formErrors.phone && <span className="text-[10px] text-rose-400 mt-1 block">{formErrors.phone}</span>}
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Driver's License Number *
+                  Indian Driving License Number *
                 </label>
                 <input
                   type="text"
-                  placeholder="DL-8829472"
+                  placeholder="DL-0420220123456"
                   value={formData.licenseNumber}
                   onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
                   className={`w-full bg-slate-900 border rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none ${formErrors.licenseNumber ? 'border-rose-500' : 'border-white/10 focus:border-amber-400'}`}
@@ -567,14 +543,28 @@ export default function BookingPage() {
 
               <div>
                 <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                  Flight Number (Optional for airport delivery)
+                  Aadhaar Card / Passport No. *
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. AA 1492"
-                  value={formData.flightNumber}
-                  onChange={(e) => setFormData({ ...formData, flightNumber: e.target.value })}
-                  className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400"
+                  placeholder="XXXX XXXX XXXX or Passport"
+                  value={formData.aadhaarNumber}
+                  onChange={(e) => setFormData({ ...formData, aadhaarNumber: e.target.value })}
+                  className={`w-full bg-slate-900 border rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none ${formErrors.aadhaarNumber ? 'border-rose-500' : 'border-white/10 focus:border-amber-400'}`}
+                />
+                {formErrors.aadhaarNumber && <span className="text-[10px] text-rose-400 mt-1 block">{formErrors.aadhaarNumber}</span>}
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                  GST Number (Optional for Tax Input Credit)
+                </label>
+                <input
+                  type="text"
+                  placeholder="29AAAAA0000A1Z5"
+                  value={formData.gstNumber}
+                  onChange={(e) => setFormData({ ...formData, gstNumber: e.target.value })}
+                  className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400 uppercase"
                 />
               </div>
             </div>
@@ -586,10 +576,10 @@ export default function BookingPage() {
                   type="checkbox"
                   checked={formData.isOver21}
                   onChange={(e) => setFormData({ ...formData, isOver21: e.target.checked })}
-                  className="w-4 h-4 rounded text-amber-500 bg-slate-800 border-white/20 focus:ring-amber-400"
+                  className="w-4 h-4 rounded text-amber-500 bg-slate-800 border-white/20 focus:ring-amber-400 cursor-pointer"
                 />
                 <span className="text-xs text-slate-300">
-                  I confirm the primary driver is at least 21 years of age with a valid license.
+                  I confirm the primary driver is at least 21 years of age with a valid Indian driving license.
                 </span>
               </label>
               {formErrors.isOver21 && <span className="text-[10px] text-rose-400 mt-1 block">{formErrors.isOver21}</span>}
@@ -597,11 +587,11 @@ export default function BookingPage() {
           </div>
 
 
-          {/* Section 3: Protection & Add-ons */}
+          {/* Section 3: Protection & Add-ons in Rupees */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
             <h3 className="text-sm font-bold text-white flex items-center gap-2 uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4 text-amber-400" />
-              <span>3. Protection Shield & Travel Add-ons</span>
+              <span>3. Full Shield Protection & Road Add-ons</span>
             </h3>
 
             <div className="space-y-3">
@@ -621,16 +611,16 @@ export default function BookingPage() {
                   />
                   <div>
                     <span className="text-xs font-bold text-white block">
-                      Premium Comprehensive Shield (Recommended)
+                      Premium Comprehensive Shield (Zero Deductible)
                     </span>
                     <p className="text-[11px] text-slate-400 leading-relaxed mt-0.5">
-                      Zero deductible for vehicle body collision, windshield, tires, lost keys, and 24/7 emergency roadside towing.
+                      Zero liability for accidental bumper scrapes, windshield stone chips, tyre punctures, and 24/7 highway towing across India.
                     </p>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <span className="text-xs font-bold text-amber-400">+$29/day</span>
-                  <span className="text-[10px] text-slate-400 block font-semibold">({formatPrice(durationDays * 29)})</span>
+                  <span className="text-xs font-bold text-amber-400">+₹499/day</span>
+                  <span className="text-[10px] text-slate-400 block font-semibold">({formatPrice(durationDays * 499)})</span>
                 </div>
               </label>
 
@@ -647,32 +637,11 @@ export default function BookingPage() {
                   />
                   <div>
                     <span className="text-xs font-bold text-white block">Additional Registered Driver</span>
-                    <span className="text-[11px] text-slate-400">Share driving privileges with full coverage</span>
+                    <span className="text-[11px] text-slate-400">Share driving privileges across long highway journeys</span>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <span className="text-xs font-bold text-white">+$15/day</span>
-                </div>
-              </label>
-
-              {/* Baby Seat */}
-              <label className={`flex items-center justify-between gap-4 p-3.5 rounded-2xl border cursor-pointer transition-all ${
-                formData.childSeat ? 'bg-amber-500/10 border-amber-400/40' : 'bg-slate-900/60 border-white/10'
-              }`}>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    checked={formData.childSeat}
-                    onChange={(e) => setFormData({ ...formData, childSeat: e.target.checked })}
-                    className="w-4 h-4 rounded text-amber-500 bg-slate-800 border-white/20 focus:ring-amber-400"
-                  />
-                  <div>
-                    <span className="text-xs font-bold text-white block">Certified Child Safety Seat</span>
-                    <span className="text-[11px] text-slate-400">Pre-installed and sanitized before arrival</span>
-                  </div>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="text-xs font-bold text-white">+$10/day</span>
+                  <span className="text-xs font-bold text-white">+₹299/day</span>
                 </div>
               </label>
 
@@ -688,12 +657,12 @@ export default function BookingPage() {
                     className="w-4 h-4 rounded text-amber-500 bg-slate-800 border-white/20 focus:ring-amber-400"
                   />
                   <div>
-                    <span className="text-xs font-bold text-white block">Pre-Paid Full Fuel Refill</span>
-                    <span className="text-[11px] text-slate-400">Return the car empty with zero refueling charges</span>
+                    <span className="text-xs font-bold text-white block">Pre-Paid Full Tank Fuel</span>
+                    <span className="text-[11px] text-slate-400">Return the car empty at the airport with zero refuel penalty</span>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <span className="text-xs font-bold text-white">+$45 flat</span>
+                  <span className="text-xs font-bold text-white">+₹1,499 flat</span>
                 </div>
               </label>
 
@@ -701,107 +670,100 @@ export default function BookingPage() {
           </div>
 
 
-          {/* Section 4: Payment Simulation */}
+          {/* Section 4: Indian Payment Simulation */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
             <h3 className="text-sm font-bold text-white flex items-center gap-2 uppercase tracking-wider">
               <CreditCard className="w-4 h-4 text-amber-400" />
-              <span>4. Guarantee & Payment Method</span>
+              <span>4. Payment & Verification</span>
             </h3>
 
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
+                onClick={() => setFormData({ ...formData, paymentMethod: 'upi' })}
+                className={`py-3 px-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                  formData.paymentMethod === 'upi'
+                    ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md'
+                    : 'bg-slate-900 border-white/10 text-slate-300'
+                }`}
+              >
+                UPI (GPay / PhonePe)
+              </button>
+              <button
+                type="button"
                 onClick={() => setFormData({ ...formData, paymentMethod: 'card' })}
-                className={`py-3 px-2 rounded-xl text-xs font-bold border transition-all ${
+                className={`py-3 px-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                   formData.paymentMethod === 'card'
                     ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md'
                     : 'bg-slate-900 border-white/10 text-slate-300'
                 }`}
               >
-                Credit Card
+                Cards (RuPay / Visa)
               </button>
               <button
                 type="button"
-                onClick={() => setFormData({ ...formData, paymentMethod: 'applepay' })}
-                className={`py-3 px-2 rounded-xl text-xs font-bold border transition-all ${
-                  formData.paymentMethod === 'applepay'
+                onClick={() => setFormData({ ...formData, paymentMethod: 'netbanking' })}
+                className={`py-3 px-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                  formData.paymentMethod === 'netbanking'
                     ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md'
                     : 'bg-slate-900 border-white/10 text-slate-300'
                 }`}
               >
-                Apple Pay
-              </button>
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, paymentMethod: 'googlepay' })}
-                className={`py-3 px-2 rounded-xl text-xs font-bold border transition-all ${
-                  formData.paymentMethod === 'googlepay'
-                    ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md'
-                    : 'bg-slate-900 border-white/10 text-slate-300'
-                }`}
-              >
-                Google Pay
+                Net Banking
               </button>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-900/90 border border-white/10 space-y-3">
-              <div>
-                <label className="text-[11px] font-semibold text-slate-400 block mb-1">
-                  Card Number
-                </label>
-                <div className="flex items-center gap-2 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-mono">
-                  <CreditCard className="w-4 h-4 text-slate-500" />
-                  <input
-                    type="text"
-                    defaultValue="4242 •••• •••• 4242"
-                    className="w-full bg-transparent focus:outline-none"
-                  />
-                  <span className="text-[10px] text-amber-400 font-bold uppercase">VISA</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
+              {formData.paymentMethod === 'upi' ? (
                 <div>
                   <label className="text-[11px] font-semibold text-slate-400 block mb-1">
-                    Expiration
+                    Enter Virtual Payment Address (UPI ID)
                   </label>
-                  <input
-                    type="text"
-                    defaultValue="12 / 28"
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-mono focus:outline-none"
-                  />
+                  <div className="flex items-center gap-2 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-mono">
+                    <input
+                      type="text"
+                      defaultValue="9876543210@paytm"
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                    <span className="text-[10px] text-emerald-400 font-bold uppercase">BHIM UPI</span>
+                  </div>
                 </div>
+              ) : (
                 <div>
                   <label className="text-[11px] font-semibold text-slate-400 block mb-1">
-                    Security CVC
+                    Card Number (RuPay, Visa, Mastercard)
                   </label>
-                  <input
-                    type="password"
-                    defaultValue="888"
-                    className="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-mono focus:outline-none"
-                  />
+                  <div className="flex items-center gap-2 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-mono">
+                    <CreditCard className="w-4 h-4 text-slate-500" />
+                    <input
+                      type="text"
+                      defaultValue="5242 •••• •••• 1234"
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                    <span className="text-[10px] text-amber-400 font-bold uppercase">RuPay</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="flex items-center gap-2 text-[11px] text-slate-400">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Full free cancellation permitted up to 24 hours before pickup station handover.</span>
+              <span>Full free cancellation permitted up to 24 hours prior to scheduled trip start.</span>
             </div>
           </div>
 
-          {/* Submit Action */}
+          {/* Submit Action - NO STAR SYMBOL */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/25 transition-all glow-btn cursor-pointer"
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-2xl shadow-amber-500/25 transition-all cursor-pointer"
           >
             {isSubmitting ? (
               <span>Confirming Reservation...</span>
             ) : (
               <>
-                <Sparkles className="w-4 h-4 fill-slate-950" />
                 <span>Confirm Reservation • {formatPrice(pricing.grandTotal)}</span>
+                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </>
             )}
           </button>
@@ -811,10 +773,10 @@ export default function BookingPage() {
 
         {/* Right Column: Order Summary Card (5 cols) */}
         <div className="lg:col-span-5">
-          <div className="sticky top-24 glass-panel p-6 rounded-3xl space-y-6 shadow-2xl">
+          <div className="sticky top-28 glass-panel p-6 rounded-3xl space-y-6 shadow-2xl">
             
             <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider pb-3 border-b border-white/10">
-              Booking Itinerary & Total
+              Booking Itinerary & Total (₹)
             </h3>
 
             {/* Car Mini View */}
@@ -841,7 +803,7 @@ export default function BookingPage() {
             <div className="grid grid-cols-3 gap-1.5 p-2 rounded-xl bg-slate-900/80 border border-white/5 text-[11px] text-slate-300 text-center font-medium">
               <div>{car.transmission}</div>
               <div>{car.fuel}</div>
-              <div>{car.zeroToSixty}</div>
+              <div>{car.fuelEconomy}</div>
             </div>
 
             {/* Location & Dates Itinerary */}
@@ -849,7 +811,7 @@ export default function BookingPage() {
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-slate-400 text-[10px] block uppercase font-bold">Pickup Station</span>
+                  <span className="text-slate-400 text-[10px] block uppercase font-bold">Pickup Hub</span>
                   <span className="text-white font-medium">{getLocationName(formData.pickupLocation)}</span>
                   <span className="text-slate-400 block text-[11px]">{formData.pickupDate} at {formData.pickupTime}</span>
                 </div>
@@ -858,14 +820,14 @@ export default function BookingPage() {
               <div className="border-t border-white/5 pt-2 flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-slate-400 text-[10px] block uppercase font-bold">Return Station</span>
+                  <span className="text-slate-400 text-[10px] block uppercase font-bold">Return Hub</span>
                   <span className="text-white font-medium">{getLocationName(formData.dropoffLocation)}</span>
                   <span className="text-slate-400 block text-[11px]">{formData.returnDate} at {formData.returnTime}</span>
                 </div>
               </div>
             </div>
 
-            {/* Financial Breakdown */}
+            {/* Financial Breakdown in INR */}
             <div className="space-y-2 text-xs border-t border-white/10 pt-4">
               <div className="flex items-center justify-between text-slate-300">
                 <span>Duration</span>
@@ -893,26 +855,20 @@ export default function BookingPage() {
                   <span>{formatPrice(pricing.additionalDriverCost)}</span>
                 </div>
               )}
-              {formData.childSeat && (
-                <div className="flex items-center justify-between text-slate-300">
-                  <span>Child Safety Seat</span>
-                  <span>{formatPrice(pricing.childSeatCost)}</span>
-                </div>
-              )}
               {formData.prepaidFuel && (
                 <div className="flex items-center justify-between text-slate-300">
                   <span>Pre-Paid Refueling</span>
-                  <span>{formatPrice(45)}</span>
+                  <span>{formatPrice(1499)}</span>
                 </div>
               )}
               <div className="flex items-center justify-between text-slate-300">
-                <span>Airport Taxes & Registration</span>
-                <span className="text-emerald-400 font-bold">$0 (Waived)</span>
+                <span>Fastag Highway Toll Tag</span>
+                <span className="text-emerald-400 font-bold">Pre-Activated</span>
               </div>
 
               {/* Grand Total */}
               <div className="pt-3 border-t border-white/10 flex items-center justify-between text-base font-black text-white">
-                <span>Total Amount</span>
+                <span>Total Amount (INR)</span>
                 <span className="text-2xl font-black text-amber-400">
                   {formatPrice(pricing.grandTotal)}
                 </span>

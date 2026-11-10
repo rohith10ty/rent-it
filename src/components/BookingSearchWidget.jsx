@@ -7,9 +7,9 @@ import {
   Car, 
   Search, 
   ArrowRightLeft, 
-  Sparkles,
   ShieldCheck,
-  Check
+  Check,
+  ArrowRight
 } from 'lucide-react';
 import { LOCATIONS } from '../data/cars';
 import { useRental } from '../context/RentalContext';
@@ -18,11 +18,11 @@ export default function BookingSearchWidget({ className = "" }) {
   const navigate = useNavigate();
   const { searchParams, setSearchParams } = useRental();
   
-  const [activeTab, setActiveTab] = useState('rental'); // rental, delivery, chauffeur
+  const [activeTab, setActiveTab] = useState('rental'); // rental, delivery, interstate
   const [differentDropoff, setDifferentDropoff] = useState(false);
   const [localState, setLocalState] = useState({
-    pickupLocation: searchParams.pickupLocation || 'lax',
-    dropoffLocation: searchParams.dropoffLocation || 'lax',
+    pickupLocation: searchParams.pickupLocation || 'blr-airport',
+    dropoffLocation: searchParams.dropoffLocation || 'blr-airport',
     pickupDate: searchParams.pickupDate,
     pickupTime: searchParams.pickupTime || '10:00',
     returnDate: searchParams.returnDate,
@@ -30,7 +30,7 @@ export default function BookingSearchWidget({ className = "" }) {
     category: 'All'
   });
 
-  const categories = ['All', 'Sports', 'Luxury', 'SUV', 'Electric', 'Economy'];
+  const categories = ['All', 'SUV', 'Sedan', 'Economy', 'Luxury', 'Sports', 'Electric'];
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -50,11 +50,11 @@ export default function BookingSearchWidget({ className = "" }) {
       
       {/* Service Modes Selector */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-5 mb-5 border-b border-white/10">
-        <div className="flex items-center gap-1.5 p-1 bg-slate-900/80 rounded-2xl border border-white/10">
+        <div className="flex items-center gap-1.5 p-1 bg-slate-900/90 rounded-2xl border border-white/10">
           <button
             type="button"
             onClick={() => setActiveTab('rental')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === 'rental' 
                 ? 'bg-amber-500 text-slate-950 shadow-md' 
                 : 'text-slate-300 hover:text-white'
@@ -65,28 +65,28 @@ export default function BookingSearchWidget({ className = "" }) {
           <button
             type="button"
             onClick={() => setActiveTab('delivery')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
               activeTab === 'delivery' 
                 ? 'bg-amber-500 text-slate-950 shadow-md' 
                 : 'text-slate-300 hover:text-white'
             }`}
           >
-            Doorstep VIP Delivery
+            Airport & Doorstep Delivery
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('chauffeur')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-              activeTab === 'chauffeur' 
+            onClick={() => setActiveTab('interstate')}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+              activeTab === 'interstate' 
                 ? 'bg-amber-500 text-slate-950 shadow-md' 
                 : 'text-slate-300 hover:text-white'
             }`}
           >
-            Chauffeur & Airport Service
+            Interstate Highway Permits
           </button>
         </div>
 
-        {/* Different drop-off toggle */}
+        {/* Different drop-off station toggle */}
         <label className="flex items-center gap-2 text-xs text-slate-300 hover:text-white cursor-pointer select-none">
           <input
             type="checkbox"
@@ -95,7 +95,7 @@ export default function BookingSearchWidget({ className = "" }) {
             className="w-4 h-4 rounded text-amber-500 bg-slate-900 border-white/20 focus:ring-amber-400 focus:ring-offset-0 cursor-pointer"
           />
           <ArrowRightLeft className="w-3.5 h-3.5 text-amber-400" />
-          <span>Different return destination</span>
+          <span>Different drop-off hub</span>
         </label>
       </div>
 
@@ -104,20 +104,20 @@ export default function BookingSearchWidget({ className = "" }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           
           {/* Pickup Location */}
-          <div className="relative p-3.5 rounded-2xl bg-slate-900/80 border border-white/10 focus-within:border-amber-400 transition-colors">
+          <div className="relative p-3.5 rounded-2xl bg-slate-900/90 border border-white/10 focus-within:border-amber-400 transition-colors">
             <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider block mb-1">
-              Pickup Station
+              Pickup Station (Airports & Hubs)
             </span>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
               <select
                 value={localState.pickupLocation}
                 onChange={(e) => setLocalState({ ...localState, pickupLocation: e.target.value })}
-                className="w-full bg-transparent text-white text-sm font-semibold focus:outline-none cursor-pointer truncate"
+                className="w-full bg-transparent text-white text-xs font-bold focus:outline-none cursor-pointer truncate"
               >
                 {LOCATIONS.map((loc) => (
                   <option key={loc.id} value={loc.id} className="bg-slate-900 text-white">
-                    {loc.name}
+                    {loc.name} ({loc.city})
                   </option>
                 ))}
               </select>
@@ -125,9 +125,9 @@ export default function BookingSearchWidget({ className = "" }) {
           </div>
 
           {/* Dropoff Location (Conditional or Same) */}
-          <div className="relative p-3.5 rounded-2xl bg-slate-900/80 border border-white/10 focus-within:border-amber-400 transition-colors">
+          <div className="relative p-3.5 rounded-2xl bg-slate-900/90 border border-white/10 focus-within:border-amber-400 transition-colors">
             <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider block mb-1">
-              {differentDropoff ? 'Return Station' : 'Drop-off Station'}
+              {differentDropoff ? 'Drop-off Station' : 'Drop-off Station'}
             </span>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
@@ -135,16 +135,16 @@ export default function BookingSearchWidget({ className = "" }) {
                 <select
                   value={localState.dropoffLocation}
                   onChange={(e) => setLocalState({ ...localState, dropoffLocation: e.target.value })}
-                  className="w-full bg-transparent text-white text-sm font-semibold focus:outline-none cursor-pointer truncate"
+                  className="w-full bg-transparent text-white text-xs font-bold focus:outline-none cursor-pointer truncate"
                 >
                   {LOCATIONS.map((loc) => (
                     <option key={loc.id} value={loc.id} className="bg-slate-900 text-white">
-                      {loc.name}
+                      {loc.name} ({loc.city})
                     </option>
                   ))}
                 </select>
               ) : (
-                <div className="text-sm font-semibold text-slate-300 truncate">
+                <div className="text-xs font-semibold text-slate-300 truncate">
                   Same as pickup station
                 </div>
               )}
@@ -152,7 +152,7 @@ export default function BookingSearchWidget({ className = "" }) {
           </div>
 
           {/* Pickup Date & Time */}
-          <div className="relative p-3.5 rounded-2xl bg-slate-900/80 border border-white/10 focus-within:border-amber-400 transition-colors">
+          <div className="relative p-3.5 rounded-2xl bg-slate-900/90 border border-white/10 focus-within:border-amber-400 transition-colors">
             <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider block mb-1">
               Pickup Date & Time
             </span>
@@ -180,7 +180,7 @@ export default function BookingSearchWidget({ className = "" }) {
           </div>
 
           {/* Return Date & Time */}
-          <div className="relative p-3.5 rounded-2xl bg-slate-900/80 border border-white/10 focus-within:border-amber-400 transition-colors">
+          <div className="relative p-3.5 rounded-2xl bg-slate-900/90 border border-white/10 focus-within:border-amber-400 transition-colors">
             <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider block mb-1">
               Return Date & Time
             </span>
@@ -209,7 +209,7 @@ export default function BookingSearchWidget({ className = "" }) {
 
         </div>
 
-        {/* Bottom Quick Category Pills and Search Action */}
+        {/* Bottom Quick Category Pills and Search Action - NO STAR SYMBOL */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
           
           {/* Quick Category selection */}
@@ -226,7 +226,7 @@ export default function BookingSearchWidget({ className = "" }) {
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
                   localState.category === cat
                     ? 'bg-amber-400/20 text-amber-300 border border-amber-400/40 shadow-sm'
-                    : 'bg-slate-900/60 text-slate-400 border border-white/5 hover:text-white hover:bg-white/5'
+                    : 'bg-slate-900/80 text-slate-400 border border-white/5 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {cat}
@@ -234,13 +234,13 @@ export default function BookingSearchWidget({ className = "" }) {
             ))}
           </div>
 
-          {/* Search CTA */}
+          {/* Search CTA - NO STAR SYMBOL */}
           <button
             type="submit"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-xl shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all glow-btn"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
           >
-            <Search className="w-4 h-4 stroke-[3]" />
-            <span>Search Fleet</span>
+            <Search className="w-4 h-4 stroke-[2.5]" />
+            <span>Search Fleet in India</span>
           </button>
         </div>
 
@@ -250,11 +250,11 @@ export default function BookingSearchWidget({ className = "" }) {
       <div className="mt-4 pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-400">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Zero hidden cancellation fees up to 24h before pickup</span>
+          <span>Active Fastag installed • All-India Tourist Commercial Permits</span>
         </div>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1 text-slate-300">
-            <Check className="w-3.5 h-3.5 text-amber-400" /> 22 Premium & Budget Cars Ready
+            <Check className="w-3.5 h-3.5 text-amber-400" /> 22 Verified Vehicles Ready
           </span>
           <span className="flex items-center gap-1 text-slate-300">
             <Check className="w-3.5 h-3.5 text-amber-400" /> Instant Digital Key

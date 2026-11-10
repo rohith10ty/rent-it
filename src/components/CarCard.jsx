@@ -5,13 +5,10 @@ import {
   Gauge, 
   Fuel, 
   Users, 
-  Zap, 
   Star, 
   ArrowRight, 
   CheckCircle2, 
-  Sparkles,
-  Shield,
-  Layers
+  ShieldCheck
 } from 'lucide-react';
 import { useRental } from '../context/RentalContext';
 
@@ -31,12 +28,12 @@ export default function CarCard({ car }) {
 
   const getPriceSuffix = () => {
     if (pricingMode === 'weekly') return '/week';
-    if (pricingMode === 'monthly') return '/mo';
+    if (pricingMode === 'monthly') return '/month';
     return '/day';
   };
 
   return (
-    <div className="group relative rounded-3xl bg-slate-900/60 border border-white/10 hover:border-amber-400/40 p-4 transition-all duration-300 flex flex-col justify-between hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1.5 backdrop-blur-md">
+    <div className="group relative rounded-3xl bg-slate-900/70 border border-white/10 hover:border-amber-400/40 p-4 transition-all duration-300 flex flex-col justify-between hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1.5 backdrop-blur-md">
       
       {/* Top Image & Badge Container */}
       <div>
@@ -52,7 +49,7 @@ export default function CarCard({ car }) {
           />
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent pointer-events-none"></div>
 
           {/* Badges on Top Left */}
           <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
@@ -83,12 +80,12 @@ export default function CarCard({ car }) {
           {/* Availability Status Ribbon */}
           <div className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 backdrop-blur-md border border-white/10 text-[11px] font-semibold text-emerald-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Available for Instant Key</span>
+            <span>Instant Digital Key</span>
           </div>
 
-          {/* Acceleration Pill */}
+          {/* 0-100 / 0-60 Pill */}
           <div className="absolute bottom-3 right-3 z-10 text-[11px] font-semibold text-slate-300 bg-slate-950/80 backdrop-blur-md px-2 py-1 rounded-lg border border-white/5">
-            0-60: <span className="text-amber-400 font-bold">{car.zeroToSixty}</span>
+            0-100: <span className="text-amber-400 font-bold">{car.zeroToSixty}</span>
           </div>
         </div>
 
@@ -119,17 +116,17 @@ export default function CarCard({ car }) {
         </p>
 
         {/* Quick Spec Pills */}
-        <div className="grid grid-cols-3 gap-2 py-3 px-3 rounded-2xl bg-white/[0.03] border border-white/5 mb-4 text-slate-300 text-xs">
+        <div className="grid grid-cols-3 gap-2 py-2.5 px-3 rounded-2xl bg-white/[0.03] border border-white/5 mb-4 text-slate-300 text-xs">
           <div className="flex items-center gap-1.5">
-            <Gauge className="w-3.5 h-3.5 text-amber-400" />
+            <Gauge className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span className="truncate">{car.transmission}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Fuel className="w-3.5 h-3.5 text-amber-400" />
+            <Fuel className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span className="truncate">{car.fuel}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Users className="w-3.5 h-3.5 text-amber-400" />
+            <Users className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span>{car.seats} Seats</span>
           </div>
         </div>
@@ -174,7 +171,7 @@ export default function CarCard({ car }) {
           </div>
         </div>
 
-        {/* Buttons */}
+        {/* Buttons - NO STAR SYMBOL IN BOOK NOW */}
         <div className="grid grid-cols-2 gap-2">
           <Link
             to={`/cars/${car.id}`}
@@ -185,7 +182,7 @@ export default function CarCard({ car }) {
           <button
             type="button"
             onClick={() => navigate(`/booking/${car.id}`)}
-            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-black shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all text-center"
+            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-black shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all text-center cursor-pointer"
           >
             <span>Book Now</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />

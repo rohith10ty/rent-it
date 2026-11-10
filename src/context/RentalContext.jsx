@@ -6,8 +6,8 @@ const RentalContext = createContext();
 export function RentalProvider({ children }) {
   // Search parameters state (from Hero or Search widgets)
   const [searchParams, setSearchParams] = useState({
-    pickupLocation: 'lax',
-    dropoffLocation: 'lax',
+    pickupLocation: 'blr-airport',
+    dropoffLocation: 'blr-airport',
     pickupDate: new Date(Date.now() + 86400000).toISOString().split('T')[0], // Tomorrow
     pickupTime: '10:00',
     returnDate: new Date(Date.now() + 86400000 * 4).toISOString().split('T')[0], // 3 days later
@@ -15,32 +15,27 @@ export function RentalProvider({ children }) {
     category: 'All'
   });
 
-  // Currency selection: USD, EUR, GBP
-  const [currency, setCurrency] = useState('USD');
-  const currencyRates = {
-    USD: { symbol: '$', rate: 1 },
-    EUR: { symbol: '€', rate: 0.92 },
-    GBP: { symbol: '£', rate: 0.79 }
-  };
+  // Selected City in India
+  const [selectedCity, setSelectedCity] = useState('Bengaluru');
 
-  const formatPrice = (usdAmount) => {
-    const { symbol, rate } = currencyRates[currency] || currencyRates.USD;
-    const converted = Math.round(usdAmount * rate);
-    return `${symbol}${converted.toLocaleString()}`;
+  // Format Price in Indian Rupees (INR ₹)
+  const formatPrice = (amount) => {
+    if (typeof amount !== 'number') amount = Number(amount) || 0;
+    return `₹${amount.toLocaleString('en-IN')}`;
   };
 
   // Saved / Favorited Cars
   const [favorites, setFavorites] = useState(() => {
     try {
-      const saved = localStorage.getItem('rent_it_favorites');
-      return saved ? JSON.parse(saved) : ['rolls-royce-phantom', 'porsche-911-gt3-rs'];
+      const saved = localStorage.getItem('rent_it_in_favorites');
+      return saved ? JSON.parse(saved) : ['mahindra-thar', 'toyota-fortuner', 'rolls-royce-phantom'];
     } catch {
-      return ['rolls-royce-phantom', 'porsche-911-gt3-rs'];
+      return ['mahindra-thar', 'toyota-fortuner', 'rolls-royce-phantom'];
     }
   });
 
   useEffect(() => {
-    localStorage.setItem('rent_it_favorites', JSON.stringify(favorites));
+    localStorage.setItem('rent_it_in_favorites', JSON.stringify(favorites));
   }, [favorites]);
 
   const toggleFavorite = (carId) => {
@@ -52,7 +47,7 @@ export function RentalProvider({ children }) {
   // User Bookings
   const [bookings, setBookings] = useState(() => {
     try {
-      const saved = localStorage.getItem('rent_it_bookings');
+      const saved = localStorage.getItem('rent_it_in_bookings');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -60,7 +55,7 @@ export function RentalProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem('rent_it_bookings', JSON.stringify(bookings));
+    localStorage.setItem('rent_it_in_bookings', JSON.stringify(bookings));
   }, [bookings]);
 
   const addBooking = (newBooking) => {
@@ -79,10 +74,9 @@ export function RentalProvider({ children }) {
       cars: CARS_DATA,
       searchParams,
       setSearchParams,
-      currency,
-      setCurrency,
+      selectedCity,
+      setSelectedCity,
       formatPrice,
-      currencyRates,
       favorites,
       toggleFavorite,
       bookings,

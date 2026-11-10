@@ -9,10 +9,8 @@ import {
   Car, 
   Grid, 
   List, 
-  Check, 
   Heart, 
   X,
-  Sparkles,
   ChevronDown
 } from 'lucide-react';
 import { useRental } from '../context/RentalContext';
@@ -20,7 +18,7 @@ import CarCard from '../components/CarCard';
 
 export default function CarsListingPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { cars, formatPrice, favorites } = useRental();
+  const { cars, formatPrice, favorites, selectedCity } = useRental();
 
   // Filters state initialized from URL search params
   const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
@@ -28,7 +26,7 @@ export default function CarsListingPage() {
   const [selectedBrand, setSelectedBrand] = useState(searchParams.get('brand') || 'All');
   const [selectedTransmission, setSelectedTransmission] = useState(searchParams.get('transmission') || 'All');
   const [selectedFuel, setSelectedFuel] = useState(searchParams.get('fuel') || 'All');
-  const [maxPrice, setMaxPrice] = useState(2500);
+  const [maxPrice, setMaxPrice] = useState(300000); // Up to 3 Lakhs in Rupees
   const [sortBy, setSortBy] = useState(searchParams.get('sort') || 'price-asc'); // default cheapest to costliest!
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [showSavedOnly, setShowSavedOnly] = useState(searchParams.get('filter') === 'saved');
@@ -48,7 +46,7 @@ export default function CarsListingPage() {
 
   const allTypes = ['All', 'Economy', 'Sedan', 'SUV', 'Sports', 'Luxury', 'Electric'];
   const transmissions = ['All', 'Automatic', 'Manual'];
-  const fuelTypes = ['All', 'Petrol', 'Hybrid', 'Electric'];
+  const fuelTypes = ['All', 'Petrol', 'Diesel', 'Hybrid', 'Electric'];
 
   // Filter & sort logic
   const filteredCars = useMemo(() => {
@@ -77,7 +75,7 @@ export default function CarsListingPage() {
         // Fuel filter
         if (selectedFuel !== 'All' && car.fuel !== selectedFuel) return false;
 
-        // Max price filter
+        // Max price filter (Rupees)
         if (car.dailyPrice > maxPrice) return false;
 
         // Saved filter
@@ -100,7 +98,7 @@ export default function CarsListingPage() {
     setSelectedBrand('All');
     setSelectedTransmission('All');
     setSelectedFuel('All');
-    setMaxPrice(2500);
+    setMaxPrice(300000);
     setSortBy('price-asc');
     setShowSavedOnly(false);
     setSearchParams({});
@@ -112,7 +110,7 @@ export default function CarsListingPage() {
     selectedBrand !== 'All' || 
     selectedTransmission !== 'All' || 
     selectedFuel !== 'All' || 
-    maxPrice < 2500 || 
+    maxPrice < 300000 || 
     showSavedOnly;
 
   return (
@@ -124,10 +122,10 @@ export default function CarsListingPage() {
           <div>
             <div className="inline-flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-widest mb-1">
               <Car className="w-4 h-4" />
-              <span>Fleet Catalog ({cars.length} Vehicles Available)</span>
+              <span>India Fleet Catalog • {selectedCity} Hub</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Explore Our Rental Fleet
+              Explore Available Cars in India
             </h1>
           </div>
 
@@ -156,7 +154,7 @@ export default function CarsListingPage() {
         </div>
 
         <p className="text-sm text-slate-400 max-w-2xl">
-          Filtered from cheapest daily commuters ($32/day) to the world's most prestigious exotics and hypercars ($2,450/day). All vehicles feature full insurance coverage and instant digital keys.
+          Complete fleet sorted from cheapest city cars (<strong className="text-white">Maruti Swift at ₹1,499/day</strong>) all the way to ultra-luxury supercars (<strong className="text-white">Rolls-Royce Phantom at ₹2,65,000/day</strong>). Fastag installed and ready for delivery.
         </p>
       </div>
 
@@ -266,10 +264,10 @@ export default function CarsListingPage() {
                 <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedFuel('All')} />
               </span>
             )}
-            {maxPrice < 2500 && (
+            {maxPrice < 300000 && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-400/10 text-amber-300 border border-amber-400/20">
                 Under {formatPrice(maxPrice)}/day
-                <X className="w-3 h-3 cursor-pointer" onClick={() => setMaxPrice(2500)} />
+                <X className="w-3 h-3 cursor-pointer" onClick={() => setMaxPrice(300000)} />
               </span>
             )}
             {showSavedOnly && (
@@ -280,7 +278,7 @@ export default function CarsListingPage() {
             )}
             <button
               onClick={resetFilters}
-              className="text-amber-400 hover:underline font-semibold ml-auto flex items-center gap-1"
+              className="text-amber-400 hover:underline font-semibold ml-auto flex items-center gap-1 cursor-pointer"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Reset all</span>
@@ -352,7 +350,7 @@ export default function CarsListingPage() {
             </select>
           </div>
 
-          {/* Price Range Slider */}
+          {/* Price Range Slider in Rupees */}
           <div className="p-5 rounded-3xl bg-slate-900/60 border border-white/10 space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider">
@@ -364,16 +362,16 @@ export default function CarsListingPage() {
             </div>
             <input
               type="range"
-              min="32"
-              max="2500"
-              step="25"
+              min="1499"
+              max="300000"
+              step="1000"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="w-full accent-amber-500 cursor-pointer"
             />
             <div className="flex items-center justify-between text-[11px] text-slate-500 font-semibold">
-              <span>{formatPrice(32)} (Hyundai i10)</span>
-              <span>{formatPrice(2450)} (Rolls-Royce)</span>
+              <span>{formatPrice(1499)} (Swift)</span>
+              <span>{formatPrice(265000)} (Phantom)</span>
             </div>
           </div>
 
@@ -438,10 +436,10 @@ export default function CarsListingPage() {
           
           <div className="flex items-center justify-between text-xs text-slate-400">
             <span>
-              Showing <strong className="text-white font-bold">{filteredCars.length}</strong> of {cars.length} cars available
+              Showing <strong className="text-white font-bold">{filteredCars.length}</strong> of {cars.length} cars in India
             </span>
             <span className="text-amber-400 font-semibold">
-              ✓ Lowest price match guaranteed
+              ✓ Fastag Pre-Installed on Every Vehicle
             </span>
           </div>
 
@@ -456,7 +454,7 @@ export default function CarsListingPage() {
               </p>
               <button
                 onClick={resetFilters}
-                className="px-6 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-amber-400 transition-all"
+                className="px-6 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-amber-400 transition-all cursor-pointer"
               >
                 Reset All Filters
               </button>

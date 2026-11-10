@@ -7,22 +7,17 @@ import {
   Gauge, 
   Fuel, 
   Users, 
-  Zap, 
   CheckCircle2, 
   ShieldCheck, 
   Calendar, 
-  Clock, 
   MapPin, 
   ArrowRight, 
-  ArrowLeft, 
   ChevronRight, 
   Award,
   Sparkles,
-  Info,
   Car as CarIcon,
   Luggage,
-  ShieldAlert,
-  Sliders
+  Zap
 } from 'lucide-react';
 import { useRental } from '../context/RentalContext';
 import { LOCATIONS } from '../data/cars';
@@ -65,7 +60,7 @@ export default function CarDetailsPage() {
   const [estimatorDates, setEstimatorDates] = useState({
     pickupDate: searchParams.pickupDate || new Date(Date.now() + 86400000).toISOString().split('T')[0],
     returnDate: searchParams.returnDate || new Date(Date.now() + 86400000 * 4).toISOString().split('T')[0],
-    pickupLocation: searchParams.pickupLocation || 'lax',
+    pickupLocation: searchParams.pickupLocation || 'blr-airport',
     includeShield: true
   });
 
@@ -90,7 +85,7 @@ export default function CarDetailsPage() {
     } else {
       base = durationDays * car.dailyPrice;
     }
-    const insuranceFee = estimatorDates.includeShield ? durationDays * 29 : 0;
+    const insuranceFee = estimatorDates.includeShield ? durationDays * 499 : 0; // ₹499/day in India
     return base + insuranceFee;
   }, [durationDays, car, estimatorDates.includeShield]);
 
@@ -98,7 +93,7 @@ export default function CarDetailsPage() {
 
   // Similar cars (same type or similar price)
   const similarCars = cars
-    .filter((c) => c.id !== car.id && (c.type === car.type || Math.abs(c.dailyPrice - car.dailyPrice) < 200))
+    .filter((c) => c.id !== car.id && (c.type === car.type || Math.abs(c.dailyPrice - car.dailyPrice) < 8000))
     .slice(0, 3);
 
   const handleProceedBooking = () => {
@@ -112,7 +107,7 @@ export default function CarDetailsPage() {
       <div className="flex items-center gap-2 text-xs text-slate-400">
         <Link to="/" className="hover:text-amber-400 transition-colors">Home</Link>
         <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-        <Link to="/cars" className="hover:text-amber-400 transition-colors">Fleet</Link>
+        <Link to="/cars" className="hover:text-amber-400 transition-colors">India Fleet</Link>
         <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
         <Link to={`/cars?type=${car.type}`} className="hover:text-amber-400 transition-colors">{car.type}</Link>
         <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
@@ -132,7 +127,7 @@ export default function CarDetailsPage() {
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Available for Instant Key
+              Fastag & Instant Key Ready
             </span>
           </div>
 
@@ -144,10 +139,10 @@ export default function CarDetailsPage() {
             <div className="flex items-center gap-1.5 bg-amber-500/10 text-amber-300 px-2.5 py-1 rounded-lg">
               <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
               <span className="font-bold">{car.rating}</span>
-              <span className="text-slate-400">({car.reviewCount} verified VIP reviews)</span>
+              <span className="text-slate-400">({car.reviewCount} verified reviews across India)</span>
             </div>
             <span>•</span>
-            <span>Zero-deductible options available</span>
+            <span>All-India Tourist Permit (Yellow Plate)</span>
           </div>
         </div>
 
@@ -172,7 +167,7 @@ export default function CarDetailsPage() {
                 alert("Car link copied to clipboard!");
               }
             }}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white text-xs font-bold transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-900 border border-white/10 text-slate-300 hover:text-white text-xs font-bold transition-colors cursor-pointer"
           >
             <Share2 className="w-4 h-4" />
             <span>Share</span>
@@ -189,7 +184,6 @@ export default function CarDetailsPage() {
           
           {/* Gallery View */}
           <div className="space-y-4">
-            {/* Main Stage Image */}
             <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden bg-slate-900 border border-white/10 shadow-2xl group">
               <img
                 src={car.images[selectedImageIndex] || car.images[0]}
@@ -224,10 +218,10 @@ export default function CarDetailsPage() {
           </div>
 
 
-          {/* 3 Tier Pricing Cards (Daily / Weekly / Monthly) */}
+          {/* 3 Tier Pricing Cards in Rupees */}
           <div className="p-6 rounded-3xl bg-slate-900/60 border border-white/10 space-y-4">
             <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider">
-              Transparent Pricing Tiers
+              Transparent Pricing Plans in Indian Rupees
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -249,7 +243,7 @@ export default function CarDetailsPage() {
                   {formatPrice(car.dailyPrice)} <span className="text-xs font-normal text-slate-400">/day</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-2">
-                  Ideal for quick getaways and weekend experiences.
+                  Ideal for weekend getaways and airport city runs.
                 </p>
               </div>
 
@@ -270,7 +264,7 @@ export default function CarDetailsPage() {
                   {formatPrice(car.weeklyPrice)} <span className="text-xs font-normal text-slate-400">/week</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-2">
-                  Approx. {formatPrice(Math.round(car.weeklyPrice / 7))}/day for extended trips.
+                  Approx. {formatPrice(Math.round(car.weeklyPrice / 7))}/day for highway touring.
                 </p>
               </div>
 
@@ -291,7 +285,7 @@ export default function CarDetailsPage() {
                   {formatPrice(car.monthlyPrice)} <span className="text-xs font-normal text-slate-400">/month</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-2">
-                  Approx. {formatPrice(Math.round(car.monthlyPrice / 30))}/day for executive long-term rentals.
+                  Approx. {formatPrice(Math.round(car.monthlyPrice / 30))}/day for corporate leases.
                 </p>
               </div>
 
@@ -299,15 +293,15 @@ export default function CarDetailsPage() {
           </div>
 
 
-          {/* Key Engineering Specifications */}
+          {/* Key Specifications Grid */}
           <div className="p-6 rounded-3xl bg-slate-900/60 border border-white/10 space-y-4">
             <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider">
-              Technical Specifications
+              Technical Specifications & Road Clearance
             </h3>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">0-60 MPH</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">0-100 KM/H</span>
                 <span className="text-lg font-black text-amber-300">{car.zeroToSixty}</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
@@ -319,7 +313,7 @@ export default function CarDetailsPage() {
                 <span className="text-lg font-black text-white">{car.horsepower}</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Fuel Economy</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Mileage / Range</span>
                 <span className="text-lg font-black text-emerald-400">{car.fuelEconomy}</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
@@ -327,22 +321,22 @@ export default function CarDetailsPage() {
                 <span className="text-base font-bold text-white">{car.transmission}</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Fuel / Power</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Fuel / Powertrain</span>
                 <span className="text-base font-bold text-white">{car.fuel}</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Passenger Seats</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Seating</span>
                 <span className="text-base font-bold text-white">{car.seats} Adults</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Luggage Capacity</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Boot Space</span>
                 <span className="text-base font-bold text-white">{car.luggage}</span>
               </div>
             </div>
 
             <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 shrink-0 text-amber-400" />
-              <span>Mileage Allowance: <strong>{car.mileage}</strong></span>
+              <Zap className="w-4 h-4 shrink-0 text-amber-400" />
+              <span>Included Allowance: <strong>{car.mileage}</strong> • Fastag Active</span>
             </div>
           </div>
 
@@ -350,7 +344,7 @@ export default function CarDetailsPage() {
           {/* Description & Overview */}
           <div className="p-6 rounded-3xl bg-slate-900/60 border border-white/10 space-y-4">
             <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider">
-              Vehicle Overview & Heritage
+              Vehicle Overview & Indian Road Capabilities
             </h3>
             <p className="text-sm text-slate-300 leading-relaxed font-light">
               {car.description}
@@ -361,7 +355,7 @@ export default function CarDetailsPage() {
           {/* Included Features Checklist */}
           <div className="p-6 rounded-3xl bg-slate-900/60 border border-white/10 space-y-4">
             <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider">
-              Key Luxury & Safety Features
+              Key Features & Inclusions
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {car.features.map((feat, idx) => (
@@ -374,24 +368,24 @@ export default function CarDetailsPage() {
           </div>
 
 
-          {/* Complimentary VIP Inclusions */}
+          {/* Complimentary Inclusions */}
           <div className="p-6 rounded-3xl bg-gradient-to-br from-slate-900/80 to-slate-950/80 border border-white/10 space-y-4">
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-amber-400" />
-              <span>Complimentary With Every Rent it Reservation</span>
+              <span>Complimentary With Every Rent it India Booking</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-300">
               <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5">
                 <strong className="text-white block mb-0.5">Free Cancellation</strong>
-                <span>Full 100% refund up to 24h before pickup</span>
+                <span>100% refund up to 24 hours before trip start</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5">
-                <strong className="text-white block mb-0.5">Sanitized & Detailed</strong>
-                <span>Hospital grade 50-point cleanliness standard</span>
+                <strong className="text-white block mb-0.5">Pre-Loaded Fastag</strong>
+                <span>Automatic cashless highway toll deduction</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5">
-                <strong className="text-white block mb-0.5">24/7 Road Assistance</strong>
-                <span>Instant dispatch anywhere nationwide</span>
+                <strong className="text-white block mb-0.5">24/7 NH Roadside Help</strong>
+                <span>Emergency roadside assist across Indian highways</span>
               </div>
             </div>
           </div>
@@ -401,7 +395,7 @@ export default function CarDetailsPage() {
 
         {/* Right Column (4 cols) - Sticky Pricing & Date Estimator */}
         <div className="lg:col-span-4">
-          <div className="sticky top-24 glass-panel p-6 rounded-3xl shadow-2xl space-y-6">
+          <div className="sticky top-28 glass-panel p-6 rounded-3xl shadow-2xl space-y-6">
             
             {/* Price Header */}
             <div className="flex items-baseline justify-between border-b border-white/10 pb-4">
@@ -425,7 +419,7 @@ export default function CarDetailsPage() {
               {/* Pickup Station */}
               <div>
                 <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block mb-1.5">
-                  Pickup / Delivery Station
+                  Pickup Hub / Airport
                 </label>
                 <div className="flex items-center gap-2 p-3 rounded-2xl bg-slate-900 border border-white/10">
                   <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
@@ -436,7 +430,7 @@ export default function CarDetailsPage() {
                   >
                     {LOCATIONS.map((loc) => (
                       <option key={loc.id} value={loc.id} className="bg-slate-900 text-white">
-                        {loc.name}
+                        {loc.name} ({loc.city})
                       </option>
                     ))}
                   </select>
@@ -478,7 +472,7 @@ export default function CarDetailsPage() {
                 </div>
               </div>
 
-              {/* Insurance option toggle */}
+              {/* Insurance option toggle in Rupees */}
               <label className="flex items-start gap-3 p-3 rounded-2xl bg-slate-900/90 border border-white/10 cursor-pointer hover:border-amber-400/30 transition-colors">
                 <input
                   type="checkbox"
@@ -487,8 +481,8 @@ export default function CarDetailsPage() {
                   className="mt-0.5 w-4 h-4 rounded text-amber-500 bg-slate-800 border-white/20 focus:ring-amber-400 focus:ring-offset-0"
                 />
                 <div className="text-xs">
-                  <span className="font-bold text-white block">Add Premium Full Shield (+$29/day)</span>
-                  <span className="text-[11px] text-slate-400">Zero deductible for collision, tires, and roadside</span>
+                  <span className="font-bold text-white block">Add Premium Full Shield (+₹499/day)</span>
+                  <span className="text-[11px] text-slate-400">Zero deductible for collision, tires, and glass</span>
                 </div>
               </label>
 
@@ -502,17 +496,17 @@ export default function CarDetailsPage() {
               </div>
               <div className="flex items-center justify-between text-slate-300">
                 <span>Base Rate</span>
-                <span>{formatPrice(estimatedTotal - (estimatorDates.includeShield ? durationDays * 29 : 0))}</span>
+                <span>{formatPrice(estimatedTotal - (estimatorDates.includeShield ? durationDays * 499 : 0))}</span>
               </div>
               {estimatorDates.includeShield && (
                 <div className="flex items-center justify-between text-slate-300">
                   <span>Full Protection Shield</span>
-                  <span>{formatPrice(durationDays * 29)}</span>
+                  <span>{formatPrice(durationDays * 499)}</span>
                 </div>
               )}
               <div className="flex items-center justify-between text-slate-300">
-                <span>Taxes & Airport Surcharges</span>
-                <span className="text-emerald-400 font-bold">$0 (Included)</span>
+                <span>Tolls (Fastag) & Interstate Permit</span>
+                <span className="text-emerald-400 font-bold">Included</span>
               </div>
 
               <div className="pt-2 border-t border-white/10 flex items-center justify-between text-sm font-black text-white">
@@ -521,18 +515,18 @@ export default function CarDetailsPage() {
               </div>
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Button - NO STAR SYMBOL */}
             <button
               type="button"
               onClick={handleProceedBooking}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 transition-all glow-btn"
+              className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 transition-all cursor-pointer"
             >
               <span>Proceed to Booking</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </button>
 
             <div className="text-center text-[11px] text-slate-400">
-              🔒 Instant confirmation • No charge until vehicle inspection
+              🔒 Instant confirmation • Digital KYC in 60 seconds
             </div>
 
           </div>
@@ -547,7 +541,7 @@ export default function CarDetailsPage() {
           <div className="flex items-center justify-between">
             <div>
               <span className="text-xs uppercase font-bold text-amber-400 tracking-wider">Recommendations</span>
-              <h3 className="text-2xl font-bold text-white">Similar Vehicles in Fleet</h3>
+              <h3 className="text-2xl font-bold text-white">Similar Vehicles in India Fleet</h3>
             </div>
             <Link to="/cars" className="text-xs font-semibold text-amber-400 hover:underline">
               View All 22 Cars →
