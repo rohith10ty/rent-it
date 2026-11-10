@@ -124,9 +124,9 @@ export const CARS_DATA = [
     fuelEconomy: "18.4 km/l",
     description: "India's highest selling premium SUV. Panoramic sunroof, Level 2 ADAS active safety, ventilated cooling seats, and dual 10.25-inch curved screens for highway touring.",
     images: [
-      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "/cars/creta.jpg",
+      "/cars/xuv700.jpg",
+      "/cars/fortuner.jpg"
     ],
     features: ["Panoramic Sunroof", "Ventilated Front Seats", "Level 2 ADAS Safety Suite", "Bose 8-Speaker Premium Audio", "360-degree Surround Camera", "Dual-Zone Automatic Climate"],
     tags: ["Panoramic Sunroof", "Ventilated Seats", "ADAS Tech"]
@@ -157,9 +157,9 @@ export const CARS_DATA = [
     fuelEconomy: "27.1 km/l (Strong Hybrid)",
     description: "The timeless executive sedan of India. Strong Hybrid powertrain giving unmatched 27+ km/l mileage, plush rear legroom, Honda Sensing ADAS, and whisper-quiet electric drive.",
     images: [
+      "/cars/city.jpg",
       "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80"
+      "/cars/swift.jpg"
     ],
     features: ["Self-Charging Strong Hybrid EV Mode", "Honda Sensing ADAS Suite", "LaneWatch Blind Spot Camera", "Electric Sunroof", "Ultra Plush Rear Lounge", "Remote Engine Start"],
     tags: ["Strong Hybrid", "27+ km/l Mileage", "Executive Class"]
@@ -190,9 +190,9 @@ export const CARS_DATA = [
     fuelEconomy: "15.2 km/l",
     description: "India's off-road icon. Built for Goa beach getaways, Western Ghat road trips, and Himachal mountain passes. 4x4 low-range transfer case and commanding road presence.",
     images: [
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80"
+      "/cars/thar.jpg",
+      "/cars/defender.jpg",
+      "/cars/gwagon.jpg"
     ],
     features: ["True 4x4 with Shift-on-Fly Transfer Case", "Mechanical Locking Differential", "226mm Water Wading & Ground Clearance", "Washable Interior with Drain Plugs", "Convertible/Hard Top", "Roll Cage Certified"],
     tags: ["4x4 Off-Road", "Goa Favorite", "Road Presence"]
@@ -223,9 +223,9 @@ export const CARS_DATA = [
     fuelEconomy: "16.5 km/l",
     description: "The 7-seater highway dominator. 185 HP mHawk diesel, All-Wheel Drive, Skyroof, Sony 3D immersive 12-speaker audio with headrest speakers, and Level 2 ADAS safety.",
     images: [
-      "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "/cars/xuv700.jpg",
+      "/cars/innova.jpg",
+      "/cars/fortuner.jpg"
     ],
     features: ["Panoramic Skyroof", "Sony 3D 12-Speaker Sound with Roof & Headrest Audio", "Smart Door Handles", "All-Wheel Drive (AWD)", "Dual 10.25-inch Digital Screens", "AdrenoX AI Connected Tech"],
     tags: ["7 Seater", "mHawk Diesel", "Highway Cruiser"]
@@ -256,9 +256,9 @@ export const CARS_DATA = [
     fuelEconomy: "21.1 km/l (Hybrid)",
     description: "The undisputed king of Indian family travel and long-distance luxury. Ottoman captain chairs with leg rest, panoramic moonroof, self-charging hybrid with 21+ km/l efficiency.",
     images: [
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "/cars/innova.jpg",
+      "/cars/fortuner.jpg",
+      "/cars/xuv700.jpg"
     ],
     features: ["VIP Powered Ottoman Captain Seats", "Dual Panoramic Glass Roof", "Toyota Safety Sense (TSS 3.0)", "JBL 9-Speaker Audio", "360-degree Camera with Dynamic Guidelines", "Ventilated Front Seats"],
     tags: ["Ottoman Seats", "Bulletproof Reliability", "Family Favorite"]
@@ -289,9 +289,9 @@ export const CARS_DATA = [
     fuelEconomy: "465 KM Range",
     description: "India's highest selling electric SUV. 465 km certified range, cinematic 12.3-inch touchscreen with Arcade.ev, V2V/V2L charging capabilities, and ultra-smooth silent acceleration.",
     images: [
-      "https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1536700503339-1e4b06520771?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1200&q=80"
+      "/cars/nexon.jpg",
+      "/cars/tata_punch.jpg",
+      "/cars/creta.jpg"
     ],
     features: ["465 KM Long Range Battery", "JBL Cinematic Sound System with Subwoofer", "Vehicle to Load (V2L) Power Bank Feature", "Fast DC Charging (10-80% in 56 mins)", "Paddle Shifter Regen Modes", "Fastag Enabled"],
     tags: ["Zero Emissions", "Green Plate", "Electric EV"]
@@ -322,9 +322,9 @@ export const CARS_DATA = [
     fuelEconomy: "14.4 km/l",
     description: "The VIP status symbol across every Indian state. 500 Nm torque from 2.8L turbo diesel engine, Catamaran-inspired styling, sequential LED indicators, and supreme road clearance.",
     images: [
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "/cars/fortuner.jpg",
+      "/cars/innova.jpg",
+      "/cars/thar.jpg"
     ],
     features: ["500 Nm Massive Torque Diesel", "4x4 High & Low with Auto-LSD", "Dual-Tone Contrast Black Roof", "11-Speaker JBL Audio System", "Ventilated Front Seats", "Kick-Sensor Powered Tailgate"],
     tags: ["VIP Status", "Legender Edition", "500 Nm Torque"]
@@ -454,9 +454,9 @@ export const CARS_DATA = [
     fuelEconomy: "16.1 km/l",
     description: "India's highest selling luxury sedan. Right-hand drive Long Wheelbase edition offering reclining rear seats with memory, rear touchpad entertainment control, and AIRMATIC air suspension.",
     images: [
+      "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80"
+      "/cars/phantom.jpg"
     ],
     features: ["Long Wheelbase Rear Reclining Executive Seats", "Rear Center Armrest Touch Tablet", "Burmester Surround Sound (590W)", "Panoramic Dual Sunroofs", "AIRMATIC Self-Leveling Air Suspension", "Electric Roller Sunblinds"],
     tags: ["LWB Executive", "Wedding & Chauffeur", "VIP First Class"]
@@ -487,9 +487,9 @@ export const CARS_DATA = [
     fuelEconomy: "10.2 km/l",
     description: "The most sought-after celebrity SUV in Mumbai and Delhi. 900mm water wading, electronic air suspension that raises by 75mm, ClearSight ground view cameras, and iconic boxy silhouettes.",
     images: [
-      "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "/cars/defender.jpg",
+      "/cars/thar.jpg",
+      "/cars/gwagon.jpg"
     ],
     features: ["Electronic Air Suspension with Adaptive Dynamics", "900mm Water Wading Capability", "Meridian 3D Surround 700W Sound", "Terrain Response 2 with Auto Mode", "ClearSight Ground Camera & Rear Mirror", "Pivi Pro 11.4-inch Touchscreen"],
     tags: ["Celebrity Choice", "900mm Wading", "Defender 110"]
@@ -520,9 +520,9 @@ export const CARS_DATA = [
     fuelEconomy: "10.8 km/l",
     description: "Sports car genes in an everyday SUV body. 7-speed lightning quick PDK transmission, GTS sport exhaust with valve acoustics, and Porsche Surface Coated Brakes.",
     images: [
+      "/cars/macan.jpg",
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?auto=format&fit=crop&w=1200&q=80"
+      "/cars/creta.jpg"
     ],
     features: ["7-Speed Dual-Clutch Porsche PDK", "Sport Chrono Package with Mode Switch", "GTS Air Suspension (-10mm lowering)", "Bose High-End Audio", "Race-Tex Interior with GTS Package", "Sport Exhaust System"],
     tags: ["Porsche Thrill", "Twin Turbo V6", "Sports SUV"]
@@ -553,9 +553,9 @@ export const CARS_DATA = [
     fuelEconomy: "8.5 km/l",
     description: "The unmistakable king of Indian VIP motorcades. Handcrafted 4.0L V8 Biturbo engine delivering 585 horsepower through twin side-exit exhausts with unforgettable acoustic roar.",
     images: [
-      "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80"
+      "/cars/gwagon.jpg",
+      "/cars/defender.jpg",
+      "/cars/thar.jpg"
     ],
     features: ["Handcrafted AMG 4.0L V8 Biturbo (585 HP)", "AMG Performance Twin Side Exhausts", "3 Electro-Mechanical Differential Locks", "22-inch AMG Forged Cross-Spoke Alloys", "Burmester Surround Sound System", "Exclusive Nappa Leather Interior"],
     tags: ["G-Wagon", "V8 Biturbo", "VIP Convoy King"]
@@ -652,9 +652,9 @@ export const CARS_DATA = [
     fuelEconomy: "Hybrid Powertrain",
     description: "The most powerful road-legal Ferrari in India. 986 HP twin-turbo V8 combined with three electric motors and RAC-e torque vectoring for sub-2.5 second launch speeds.",
     images: [
+      "/cars/sf90.jpg",
       "https://images.unsplash.com/photo-1592198084033-aade902d1aae?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "/cars/revuelto.jpg"
     ],
     features: ["Ferrari 986 HP Hybrid Architecture", "Assetto Fiorano Lightweight Track Package", "Multimatic Shock Absorbers", "Head-Up Display with Touch Haptic Steering", "Front Axle Hydraulic Lift for Indian Road Speedbreakers", "Carbon Fiber Wheels & Aero Wing"],
     tags: ["986 HP Hypercar", "Prancing Horse", "Assetto Fiorano"]
@@ -685,9 +685,9 @@ export const CARS_DATA = [
     fuelEconomy: "V12 Hybrid",
     description: "Sant'Agata Bolognese's 1,001 HP V12 flagship. Vertical scissor doors, carbon-fiber monofuselage chassis, 13 driving modes, and front axle lift for smooth city speed breaker clearance.",
     images: [
+      "/cars/revuelto.jpg",
       "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=80"
+      "/cars/sf90.jpg"
     ],
     features: ["6.5L Naturally Aspirated V12 + 3 Electric Motors (1001 HP)", "Iconic Vertical Scissor Doors", "Front Hydraulic Axle Lift System (+40mm)", "Carbon Monofuselage Chassis", "Lamborghini Dinamica Veicolo Integrata", "Bridgestone Potenza Sport Custom Tyres"],
     tags: ["1001 HP V12", "Scissor Doors", "Indian Speedbreaker Lift"]
@@ -718,9 +718,9 @@ export const CARS_DATA = [
     fuelEconomy: "7.1 km/l",
     description: "The pinnacle of luxury automotive heritage. Starlight headliner with 1,344 fiber-optic shooting stars, refrigerated champagne console, lambswool carpets, and Flagbearer Magic Carpet Ride suspension.",
     images: [
+      "/cars/phantom.jpg",
       "https://images.unsplash.com/photo-1631295868223-63265b40d9e4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["Starlight Headliner with Shooting Star Animations", "Flagbearer Stereo Camera Predictive Suspension", "Power Suicide Coach Doors with One-Touch Close", "Refrigerated Console with Bespoke Champagne Flutes", "Rear Theater Lounge with Twin 12-inch Displays", "Chauffeur & VIP Armed Security Protocol Available"],
     tags: ["Pinnacle of Luxury", "Royal Starlight", "VIP Chauffeur"]

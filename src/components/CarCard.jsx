@@ -37,7 +37,7 @@ export default function CarCard({ car }) {
       
       {/* Top Image & Badge Container */}
       <div>
-        <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-800/80 mb-4">
+        <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-950 mb-4">
           
           {/* Main Car Photo */}
           <img
