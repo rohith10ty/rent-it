@@ -42,61 +42,63 @@ export default function HomePage() {
   };
 
   return (
-    <div className="relative overflow-hidden pt-20">
+    <div className="relative overflow-hidden pt-16">
       
       {/* =========================================================================
           HERO SECTION (TAILORED FOR INDIA)
          ========================================================================= */}
-      <section className="relative min-h-[92vh] flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 pt-8 pb-20">
+      <section className="relative flex flex-col justify-start items-center px-4 sm:px-6 lg:px-8 pt-4 pb-14">
         
         {/* Background Visual with Ambient Lighting */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=2000&q=85"
             alt="Rent it India Fleet"
-            className="w-full h-full object-cover object-center scale-105 filter brightness-[0.34] contrast-[1.1]"
+            className="w-full h-full object-cover object-center scale-105 filter brightness-[0.32] contrast-[1.1]"
           />
           {/* Ambient colored lighting glows */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-amber-500/15 rounded-full blur-[140px] pointer-events-none animate-pulse-subtle"></div>
-          <div className="absolute bottom-10 left-10 w-[500px] h-[300px] bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-500/15 rounded-full blur-[140px] pointer-events-none animate-pulse-subtle"></div>
+          <div className="absolute bottom-10 left-10 w-[500px] h-[250px] bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#0b0f17]/90 via-[#0b0f17]/60 to-[#0b0f17] pointer-events-none"></div>
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto text-center space-y-6 pt-6 pb-10">
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-3.5 pt-2 pb-5">
           
           {/* VIP Badge with Tricolor Accent */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-amber-300 text-xs sm:text-sm font-semibold shadow-lg">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-amber-300 text-xs font-semibold shadow-md">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>India's #1 Rated Car Rental & Self-Drive Fleet • Starting at ₹1,499/day</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08]">
+          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.08]">
             Drive Across India. <br />
             <span className="gold-gradient-text">Rent it With Pure Freedom.</span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
-            From agile city hatchbacks in Bengaluru traffic to rugged 4x4 Thars in Goa and Rolls-Royces in Mumbai. 100% digital KYC, doorstep airport delivery, and pre-activated Fastag.
+          {/* Subtitle - Exactly 2 lines */}
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-light">
+            From agile city hatchbacks in Bengaluru to rugged 4x4 Thars in Goa and Rolls-Royces in Mumbai.
+            <span className="hidden sm:inline"><br /></span>
+            Experience 100% digital KYC, doorstep airport delivery, and pre-activated Fastag across India.
           </p>
 
-          {/* Quick Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto pt-2 text-left">
-            <div className="p-3.5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10">
+          {/* Quick Stats Grid - 4 Boxes Clearly Visible */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto pt-1 text-left">
+            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
               <span className="text-xl sm:text-2xl font-black text-amber-400 block">22+</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Verified Cars</span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10">
+            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
               <span className="text-xl sm:text-2xl font-black text-white block">₹1,499 – ₹2.65L</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Daily Rate Spectrum</span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10">
+            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
               <span className="text-xl sm:text-2xl font-black text-amber-400 block">12+ Metros</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">DEL, BOM, BLR, GOA</span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-900/70 backdrop-blur-md border border-white/10">
+            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
               <span className="text-xl sm:text-2xl font-black text-white block">Fastag Ready</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Automatic Toll Pass</span>
             </div>
@@ -105,7 +107,7 @@ export default function HomePage() {
         </div>
 
         {/* Hero Search Widget */}
-        <div className="w-full relative z-20">
+        <div className="w-full relative z-20 mt-1">
           <BookingSearchWidget />
         </div>
 
