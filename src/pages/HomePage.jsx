@@ -42,7 +42,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="relative overflow-hidden pt-28">
+    <div className="relative overflow-hidden pt-20">
       
       {/* =========================================================================
           HERO SECTION (TAILORED FOR INDIA)
