@@ -30,7 +30,7 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Fleet Catalog', target: '/cars', isRoute: true },
+    { name: 'All Cars', target: '/cars', isRoute: true },
     { name: 'Airport & City Hubs', target: 'hubs', isRoute: false },
     { name: 'Self-Drive Experience', target: 'experience', isRoute: false },
     { name: 'How It Works', target: 'how-it-works', isRoute: false },
@@ -80,10 +80,18 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-6">
             
-            {/* Brand Logo - Single Line (No .in, No India Premier Mobility subtitle) */}
+            {/* Brand Logo - Single Line with Tricolor Accent */}
             <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-amber-400 to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300">
-                <Car className="w-5 h-5 text-slate-950 stroke-[2.5]" />
+              <div className="relative">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-amber-400 to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300">
+                  <Car className="w-5 h-5 text-slate-950 stroke-[2.5]" />
+                </div>
+                {/* Micro Tricolor Accent */}
+                <div className="absolute -bottom-1 -right-1 flex gap-0.5 p-0.5 rounded-full bg-slate-950 border border-white/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF9933]"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#138808]"></span>
+                </div>
               </div>
               <span className="text-2xl font-black tracking-tight text-white group-hover:text-amber-400 transition-colors whitespace-nowrap">
                 Rent<span className="text-amber-400">it</span>
