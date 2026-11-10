@@ -42,12 +42,12 @@ export default function HomePage() {
   };
 
   return (
-    <div className="relative overflow-hidden pt-16">
+    <div className="relative overflow-hidden pt-14">
       
       {/* =========================================================================
-          HERO SECTION (TAILORED FOR INDIA)
+          HERO SECTION (TAILORED FOR INDIA) - FITS VIEWPORT PERFECTLY WITH 4 BOXES
          ========================================================================= */}
-      <section className="relative flex flex-col justify-start items-center px-4 sm:px-6 lg:px-8 pt-4 pb-14">
+      <section className="relative min-h-[calc(100vh-64px)] flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-10">
         
         {/* Background Visual with Ambient Lighting */}
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -62,17 +62,17 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#0b0f17]/90 via-[#0b0f17]/60 to-[#0b0f17] pointer-events-none"></div>
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-3.5 pt-2 pb-5">
+        {/* Hero Content: Badge, Headline, 2-line Paragraph, and 4 Stat Boxes */}
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5 my-auto">
           
           {/* VIP Badge with Tricolor Accent */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-amber-300 text-xs font-semibold shadow-md">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-amber-300 text-xs font-semibold shadow-md">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>India's #1 Rated Car Rental & Self-Drive Fleet • Starting at ₹1,499/day</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.08]">
+          <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-black text-white tracking-tight leading-[1.08]">
             Drive Across India. <br />
             <span className="gold-gradient-text">Rent it With Pure Freedom.</span>
           </h1>
@@ -84,33 +84,55 @@ export default function HomePage() {
             Experience 100% digital KYC, doorstep airport delivery, and pre-activated Fastag across India.
           </p>
 
-          {/* Quick Stats Grid - 4 Boxes Clearly Visible */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto pt-1 text-left">
-            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
-              <span className="text-xl sm:text-2xl font-black text-amber-400 block">22+</span>
+          {/* Quick Stats Grid - 4 Boxes Sitting Comfortably Above Bottom Viewport */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto pt-2 text-left">
+            <div className="p-4 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-lg">
+              <span className="text-2xl font-black text-amber-400 block">22+</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Verified Cars</span>
             </div>
-            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
-              <span className="text-xl sm:text-2xl font-black text-white block">₹1,499 – ₹2.65L</span>
+            <div className="p-4 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-lg">
+              <span className="text-2xl font-black text-white block">₹1,499 – ₹2.65L</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Daily Rate Spectrum</span>
             </div>
-            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
-              <span className="text-xl sm:text-2xl font-black text-amber-400 block">12+ Metros</span>
+            <div className="p-4 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-lg">
+              <span className="text-2xl font-black text-amber-400 block">12+ Metros</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">DEL, BOM, BLR, GOA</span>
             </div>
-            <div className="p-3 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-md">
-              <span className="text-xl sm:text-2xl font-black text-white block">Fastag Ready</span>
+            <div className="p-4 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-white/10 hover:border-amber-400/40 transition-colors shadow-lg">
+              <span className="text-2xl font-black text-white block">Fastag Ready</span>
               <span className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Automatic Toll Pass</span>
             </div>
           </div>
 
+          {/* Subtle Quick Scroll Prompt */}
+          <div className="pt-2">
+            <a
+              href="#search"
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById('search');
+                if (el) {
+                  if (window.lenis) window.lenis.scrollTo(el, { offset: -90 });
+                  else el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-amber-400 transition-colors font-medium cursor-pointer"
+            >
+              <span>Search & Reserve Fleet Below</span>
+              <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
+            </a>
+          </div>
+
         </div>
 
-        {/* Hero Search Widget */}
-        <div className="w-full relative z-20 mt-1">
-          <BookingSearchWidget />
-        </div>
+      </section>
 
+
+      {/* =========================================================================
+          BOOKING SEARCH WIDGET (DEDICATED SECTION BELOW HERO)
+         ========================================================================= */}
+      <section className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="search">
+        <BookingSearchWidget />
       </section>
 
 
