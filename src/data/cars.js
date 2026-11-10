@@ -25,9 +25,9 @@ export const CARS_DATA = [
     fuelEconomy: "24.8 km/l",
     description: "India's undisputed favorite hatchback. Nimble city driving, class-leading fuel efficiency, punchy Z-Series engine, and effortless parking in Bangalore, Mumbai, or Delhi traffic.",
     images: [
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
+      "/cars/swift.jpg",
       "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["SmartPlay Pro+ 9-inch Touchscreen", "Wireless Android Auto & Apple CarPlay", "Fastag Pre-Activated", "Rear Parking Camera", "Cruise Control", "Push Button Start"],
     tags: ["Best Mileage", "Easy City Drive", "Fastag Ready"]
@@ -58,8 +58,8 @@ export const CARS_DATA = [
     fuelEconomy: "20.7 km/l",
     description: "Premium cabin feel in a compact city footprint. Automatic AMT transmission for stress-free commute across traffic corridors, equipped with wireless charging and crisp touchscreen.",
     images: [
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80",
+      "/cars/i10_nios.jpg",
+      "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["Smooth AMT Automatic", "Wireless Phone Charger", "Projector Headlamps", "Rear AC Vents", "Fastag Enabled", "Tyre Pressure Monitoring"],
@@ -91,9 +91,9 @@ export const CARS_DATA = [
     fuelEconomy: "20.1 km/l",
     description: "5-Star Global NCAP safety rated micro-SUV. High 187mm ground clearance to tackle rough monsoon potholes and speed breakers with complete confidence.",
     images: [
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1508974239320-0a029497e820?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80"
+      "/cars/tata_punch.jpg",
+      "/cars/swift.jpg",
+      "/cars/i10_nios.jpg"
     ],
     features: ["5-Star Global NCAP Safety", "187mm High Ground Clearance", "Harman Acoustic Sound", "90-degree Wide Opening Doors", "Cooled Glovebox", "Fastag Auto-toll"],
     tags: ["5-Star Safety", "High Ground Clearance", "Monsoon Ready"]
