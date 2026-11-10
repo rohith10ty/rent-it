@@ -91,9 +91,9 @@ export const CARS_DATA = [
     fuelEconomy: "20.1 km/l",
     description: "5-Star Global NCAP safety rated micro-SUV. High 187mm ground clearance to tackle rough monsoon potholes and speed breakers with complete confidence.",
     images: [
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1508974239320-0a029497e820?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["5-Star Global NCAP Safety", "187mm High Ground Clearance", "Harman Acoustic Sound", "90-degree Wide Opening Doors", "Cooled Glovebox", "Fastag Auto-toll"],
     tags: ["5-Star Safety", "High Ground Clearance", "Monsoon Ready"]
@@ -124,8 +124,8 @@ export const CARS_DATA = [
     fuelEconomy: "18.4 km/l",
     description: "India's highest selling premium SUV. Panoramic sunroof, Level 2 ADAS active safety, ventilated cooling seats, and dual 10.25-inch curved screens for highway touring.",
     images: [
-      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["Panoramic Sunroof", "Ventilated Front Seats", "Level 2 ADAS Safety Suite", "Bose 8-Speaker Premium Audio", "360-degree Surround Camera", "Dual-Zone Automatic Climate"],
@@ -223,8 +223,8 @@ export const CARS_DATA = [
     fuelEconomy: "16.5 km/l",
     description: "The 7-seater highway dominator. 185 HP mHawk diesel, All-Wheel Drive, Skyroof, Sony 3D immersive 12-speaker audio with headrest speakers, and Level 2 ADAS safety.",
     images: [
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["Panoramic Skyroof", "Sony 3D 12-Speaker Sound with Roof & Headrest Audio", "Smart Door Handles", "All-Wheel Drive (AWD)", "Dual 10.25-inch Digital Screens", "AdrenoX AI Connected Tech"],
@@ -256,9 +256,9 @@ export const CARS_DATA = [
     fuelEconomy: "21.1 km/l (Hybrid)",
     description: "The undisputed king of Indian family travel and long-distance luxury. Ottoman captain chairs with leg rest, panoramic moonroof, self-charging hybrid with 21+ km/l efficiency.",
     images: [
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["VIP Powered Ottoman Captain Seats", "Dual Panoramic Glass Roof", "Toyota Safety Sense (TSS 3.0)", "JBL 9-Speaker Audio", "360-degree Camera with Dynamic Guidelines", "Ventilated Front Seats"],
     tags: ["Ottoman Seats", "Bulletproof Reliability", "Family Favorite"]
@@ -322,8 +322,8 @@ export const CARS_DATA = [
     fuelEconomy: "14.4 km/l",
     description: "The VIP status symbol across every Indian state. 500 Nm torque from 2.8L turbo diesel engine, Catamaran-inspired styling, sequential LED indicators, and supreme road clearance.",
     images: [
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["500 Nm Massive Torque Diesel", "4x4 High & Low with Auto-LSD", "Dual-Tone Contrast Black Roof", "11-Speaker JBL Audio System", "Ventilated Front Seats", "Kick-Sensor Powered Tailgate"],
@@ -487,8 +487,8 @@ export const CARS_DATA = [
     fuelEconomy: "10.2 km/l",
     description: "The most sought-after celebrity SUV in Mumbai and Delhi. 900mm water wading, electronic air suspension that raises by 75mm, ClearSight ground view cameras, and iconic boxy silhouettes.",
     images: [
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80"
     ],
     features: ["Electronic Air Suspension with Adaptive Dynamics", "900mm Water Wading Capability", "Meridian 3D Surround 700W Sound", "Terrain Response 2 with Auto Mode", "ClearSight Ground Camera & Rear Mirror", "Pivi Pro 11.4-inch Touchscreen"],
